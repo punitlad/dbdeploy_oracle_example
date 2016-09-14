@@ -32,6 +32,12 @@
         <sql driver="${db.driver}" url="${db.url}" userid="${db.userid}" password="${db.password}" classpathref="oracle.classpath">
             <fileset file="../scripts/createSchemaVersionTable.ora.sql"/>
         </sql>
-    </target>
+	</target>
+
+	<target name="drop-table">
+		<sql driver="${db.driver}" url="${db.url}" userid="${db.userid}" password="${db.password}" classpathref="oracle.classpath" print="true">
+			drop table changelog;
+		</sql>
+	</target>
 
 </project>
