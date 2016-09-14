@@ -1,42 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="dbdeploy_example" default="default">
-    <property name="db.driver" value="oracle.jdbc.OracleDriver" />
-    <property name="db.url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+  <property name="db.driver" value="oracle.jdbc.OracleDriver" />
+  <property name="db.url" value="jdbc:oracle:thin:@localhost:1521:xe" />
 	<property name="db.userid" value="override_me" />
 	<property name="db.password" value="override_me" />
 
 	<path id="oracle.classpath">
 		<fileset dir=".">
-			<include name="ojdbc*.jar"/>			
-		</fileset>		
+			<include name="ojdbc*.jar"/>
+		</fileset>
 	</path>
 
-    <path id="dbdeploy.classpath">
-        <!-- include the dbdeploy-ant jar -->
-        <fileset dir="..">
-            <include name="dbdeploy-ant-*.jar"/>
-        </fileset>
+  <path id="dbdeploy.classpath">
+    <fileset dir="..">
+      <include name="dbdeploy-ant-*.jar"/>
+    </fileset>
+    <path refid="oracle.classpath" />
+  </path>
 
-        <!-- the dbdeploy task also needs the database driver jar on the classpath -->
-        <path refid="oracle.classpath" />
-    </path>
+  <taskdef name="dbdeploy" classname="com.dbdeploy.AntTarget" classpathref="dbdeploy.classpath"/>
 
-    <taskdef name="dbdeploy" classname="com.dbdeploy.AntTarget" classpathref="dbdeploy.classpath"/>
+  <target name="default" depends="clean, update-database"/>
 
-    <target name="default" depends="clean, update-database"/>
+  <target name="clean" depends="drop-table, create-changelog-table"/>
 
-    <target name="clean" depends="create-changelog-table"/>
+  <target name="create-changelog-table">
+    <sql driver="${db.driver}" url="${db.url}" userid="${db.userid}" password="${db.password}" classpathref="oracle.classpath">
+      <fileset file="../scripts/createSchemaVersionTable.ora.sql"/>
+    </sql>
+  </target>
 
-    <target name="create-changelog-table">
-        <sql driver="${db.driver}" url="${db.url}" userid="${db.userid}" password="${db.password}" classpathref="oracle.classpath">
-            <fileset file="../scripts/createSchemaVersionTable.ora.sql"/>
-        </sql>
-	</target>
+  <target name="update-database" description="generate a sql upgrade script">
+      <dbdeploy driver="${db.driver}" url="${db.url}" userid="${db.userid}" password="${db.password}" dir="." />
+  </target>
 
 	<target name="drop-table">
 		<sql driver="${db.driver}" url="${db.url}" userid="${db.userid}" password="${db.password}" classpathref="oracle.classpath" print="true">
-			drop table changelog;
+      drop table changelog;
+      drop table test;
 		</sql>
 	</target>
 
