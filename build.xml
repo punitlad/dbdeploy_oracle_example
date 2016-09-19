@@ -2,9 +2,10 @@
 
 <project name="dbdeploy_example" default="default">
   <property name="db.driver" value="oracle.jdbc.OracleDriver" />
-  <property name="db.url" value="jdbc:oracle:thin:@localhost:1521:xe" /> 
+  <property name="db.url" value="jdbc:oracle:thin:@localhost:1521:xe" />
   <property name="db.userid" value="override_me" />
   <property name="db.password" value="override_me" />
+  <property name="db.sql.directory" value="." />
 
   <path id="oracle.classpath">
 	<fileset dir=".">
@@ -32,7 +33,7 @@
   </target>
 
   <target name="update-database" description="generate a sql upgrade script">
-      <dbdeploy driver="${db.driver}" url="${db.url}" userid="${db.userid}" password="${db.password}" dir="." />
+      <dbdeploy driver="${db.driver}" url="${db.url}" userid="${db.userid}" password="${db.password}" dir="${db.sql.directory}" />
   </target>
 
 	<target name="drop-table">
@@ -43,7 +44,7 @@
 
   <!-- <target name="update-database-and-apply-as-separate-step" description="generate a sql upgrade script">
     <dbdeploy driver="${db.driver}" url="${db.url}" userid="${db.userid}" password="${db.password}" dbms="oracle"
-      dir="."
+      dir="${db.sql.directory}"
       outputfile="output.sql"
       undoOutputfile="undo.sql"
       />
