@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="dbdeploy_example" default="default">
+<project name="oracle_dbdeploy_example" default="default">
   <property name="db.driver" value="oracle.jdbc.OracleDriver" />
   <property name="db.url" value="jdbc:oracle:thin:@localhost:1521:xe" />
   <property name="db.userid" value="override_me" />
