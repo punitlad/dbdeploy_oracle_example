@@ -8,13 +8,13 @@
   <property name="db.sql.directory" value="." />
 
   <path id="oracle.classpath">
-	<fileset dir=".">
+	<fileset dir="dependencies/">
 	  <include name="ojdbc*.jar"/>
     </fileset>
   </path>
 
   <path id="dbdeploy.classpath">
-    <fileset dir="..">
+    <fileset dir="dependencies/">
       <include name="dbdeploy-ant-*.jar"/>
     </fileset>
     <path refid="oracle.classpath" />
@@ -28,7 +28,7 @@
 
   <target name="create-changelog-table">
     <sql driver="${db.driver}" url="${db.url}" userid="${db.userid}" password="${db.password}" classpathref="oracle.classpath">
-      <fileset file="../scripts/createSchemaVersionTable.ora.sql"/>
+      <fileset file="createSchemaVersionTable.ora.sql"/>
     </sql>
   </target>
 
