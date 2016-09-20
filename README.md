@@ -6,7 +6,7 @@ Can be run in multiple ways:
 `ant -Ddb.userid="{db.userid}" -Ddb.password="{db.password}" -Ddb.url="{db.url}" -Ddb.sql.directory="{db.sql.directory}" [clean|update-database]`
 
 ##Using Bash
-`. create_changelog_table.sql`
+`. create_changelog_table.sh`
 
 `. update_database.sh`
 
