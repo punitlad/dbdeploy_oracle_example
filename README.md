@@ -7,5 +7,6 @@ Can be run in multiple ways:
 
 ##Using Bash
 `. create_changelog_table.sql`
+
 `. update_database.sh`
 
